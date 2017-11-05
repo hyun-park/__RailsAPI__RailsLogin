@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>로그인</h1><br>
+Email: <input type="text" id="name" name="username">
+<br>
+Password: <input type="password" id="pwd" name="password">
+<br>
+<input type="submit" value="Login" onclick="login()">
+
+<br>
+<h3 id="errormsg"></h3>
+<script>
+    
+    function login() {
+        var username = $("#name").val();
+        var password = $("#pwd").val();
+        $.ajax({
+            method: "GET",
+            // 쿠키 로그인 방식
+            url: "/cookies/index",
+            
+            // 세션 로그인 방식
+            // url: "/sessions/index",
+            
+            // 토큰 로그인 방식
+            // url: "/tokens/index",
+            
+            data: {username: username, password: password}
+        })
+        .done(function (msg) {
+            // 로그인 성공시 마이페이지로 이동
+            if(msg.message == "success"){
+                
+                //쿠키 로그인 방식
+                $(location).attr('href','/mypage_cookie.html');
+                
+                //세션 로그인 방식
+                // $(location).attr('href','/mypage.html');
+                
+                //토큰 로그인 방식
+                // $(location).attr('href','/mypage.html');
+                
+                
+            // 로그인 실패시 실패 메세지
+            } else {
+                $("#errormsg").text(msg.message);
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

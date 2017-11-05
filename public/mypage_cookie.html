@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>My Page</h1>
+<h3 id="username"></h3>
+<a href="/mypage2_cookie">마이 페이지2로</a>
+<script>
+    var cookie = document.cookie;
+    
+    // 쿠키를 불러오는 함수
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+    
+    // username 이라는  쿠키가 있는지 확인
+    if(typeof getCookie("username") != undefined) {
+        // 있으면 서버에 ajax를 통해서
+        // 해당 유저정보가 맞는지 확인
+        $.ajax({
+            method: "GET",
+            url: "/cookies/index",
+            data: {username: getCookie("username"), password: getCookie("password")}
+        })
+        .done(function (msg) {
+            console.log(msg);
+            // 유저정보가 맞으면 username 출력
+            if(msg.message == "success"){
+                $("#username").text("Username:" + getCookie("username"));
+            
+            // 유저정보가 틀리면 로그인 페이지로 강제 이동
+            } else {
+                $("#errormsg").text(msg.message);
+                $(location).attr('href','/signin.html');
+            }
+        });
+        
+    // 쿠키가 없으므로 로그인 페이지로 강제 이동
+    } else {
+        $(location).attr('href','/signin.html');
+    }
+</script>
+</body>
+</html>

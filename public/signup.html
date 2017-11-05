@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <label>*가입 성공시 콘솔에 유저정보 반환</label><br><br>
+    Username: <input type="text" id="name" name="username">
+    <br>
+    Password: <input type="password" id="pwd" name="password">
+    <br>
+    <input type="submit" value="회원가입" onclick="login()">
+    <br><br>
+    <a href="/signin">이제 로그인하러 가기</a>
+<script>
+function login() {
+    var username = $("#name").val();
+    var password = $("#pwd").val();
+    $.ajax({
+        method: "GET",
+        url: "/users/signup",
+        data: {username: username, password: password}
+    })
+    .done(function (msg) {
+        console.log(msg);
+    });
+}
+</script>
+
+</body>
+</html>
