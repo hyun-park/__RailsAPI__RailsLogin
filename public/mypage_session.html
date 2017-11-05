@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>마이 페이지1</h1>
+<h3 id="username"></h3>
+<a href="/mypage2_session.html">마이 페이지2로</a>
+<script>
+
+    // rails sessions 컨트롤러 index액션에 ajax로 통신을 해서
+    // 서버에 해당 유저 세션이 있는지 확인
+    $.ajax({
+        method: "GET",
+        url: "/sessions/index"
+        // ★★★★★★★★★★★★★★★★★★★★★★
+        // ajax 통신의 마지막 부분을 채우세요
+        // 서버에 어떤 data를 보내야 할까요?
+        // data: {}
+        // ★★★★★★★★★★★★★★★★★★★★★★
+    })
+    .done(function (msg) {
+        console.log(msg);
+        // 유저정보가 맞으면 username 출력
+        if(msg.message == "success"){
+            $("#username").text("Username:" + msg.user.username);
+        
+        // 유저정보가 틀리면 로그인 페이지로 강제 이동
+        } else {
+            $(location).attr('href','/signin.html');
+        }
+    });
+</script>
+</body>
+</html>

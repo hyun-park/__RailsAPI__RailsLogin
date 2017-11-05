@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'tokens/index'
 
   get 'sessions/index'
+  get 'sessions/delete'
 
   get 'cookies/index'
 

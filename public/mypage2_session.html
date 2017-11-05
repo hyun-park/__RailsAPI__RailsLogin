@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>마이페이지2</h1>
+<h3 id="username"></h3>
+<h3>축하합니다! 당신은 처음으로 디바이스 없이 세션으로 로그인을 구현했습니다! (이건 정상적인 방법)</h3>
+<button onclick="signOut()">로그아웃 (= 세션ID 정보 값이 담긴 쿠키삭제)</button>
+<script>
+    // rails sessions 컨트롤러 index액션에 ajax로 통신을 해서
+    // 서버에 해당 유저 세션이 있는지 확인
+    $.ajax({
+        method: "GET",
+        url: "/sessions/index"
+        // ★★★★★★★★★★★★★★★★★★★★★★
+        // ajax 통신의 마지막 부분을 채우세요
+        // 서버에 어떤 data를 보내야 할까요?
+        // data: {}
+        // ★★★★★★★★★★★★★★★★★★★★★★
+    })
+    .done(function (msg) {
+        console.log(msg);
+        // 유저정보가 맞으면 username 출력
+        if(msg.message == "success"){
+            $("#username").text("Username:" + msg.user.username);
+        
+        // 유저정보가 틀리면 로그인 페이지로 강제 이동
+        } else {
+            $(location).attr('href','/signin.html');
+        }
+    });
+    
+    // HTTP-only 쿠키는 클라이언트에서 삭제할 수 없다.
+    // 따라서 rails 서버의 sessions을 삭제하는 부분으로
+    // 요청을 보내 서버에 저장된 정보를 삭제해야 한다.
+    function signOut() {
+        $.ajax({
+            method: "GET",
+            url: "/sessions/delete"
+        })
+        .done(function (msg) {
+            $(location).attr('href','/signin.html');
+        });
+    }
+</script>
+</body>
+</html>

@@ -14,10 +14,6 @@ class CookiesController < ApplicationController
         # ★★★★★★★★★★★★★★★★★★★★★★
         # 회원이 직접 입력해서 한 로그인일 경우
         # 아이디와 비밀번호를 쿠키로 세팅하시오.
-        if params[:password]
-          cookies[:username] = params[:username]
-          cookies[:password] = params[:password]
-        end
         # ★★★★★★★★★★★★★★★★★★★★★★
       
         # JSON으로 응답할 메세지에 success 메세지 담기

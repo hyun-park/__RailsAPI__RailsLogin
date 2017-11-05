@@ -10,9 +10,10 @@
         crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>마이 페이지1</h1>
+<h1>마이페이지2</h1>
 <h3 id="username"></h3>
-<a href="/mypage2_cookie">마이 페이지2로</a>
+<h3>축하합니다! 당신은 처음으로 디바이스 없이 쿠키로 로그인을 구현했습니다! (는 이렇게 하면 안됨)</h3>
+<button onclick="signOut()">로그아웃 (= 쿠키삭제)</button>
 <script>
     var cookie = document.cookie;
     
@@ -36,7 +37,7 @@
             console.log(msg);
             // 유저정보가 맞으면 username 출력
             if(msg.message == "success"){
-                $("#username").text("Username:" + msg.user.username);
+                $("#username").text("Username:" + getCookie("username"));
             
             // 유저정보가 틀리면 로그인 페이지로 강제 이동
             } else {
@@ -46,6 +47,15 @@
         
     // 쿠키가 없으므로 로그인 페이지로 강제 이동
     } else {
+        $(location).attr('href','/signin.html');
+    }
+    
+    function signOut() {
+        var expireDate = new Date();
+        //어제 날짜를 쿠키 소멸 날짜로 설정한다.
+        expireDate.setDate( expireDate.getDate() - 1 );
+        document.cookie = "username= " + "; expires=" + expireDate.toGMTString() + "; path=/";
+        document.cookie = "password= " + "; expires=" + expireDate.toGMTString() + "; path=/";
         $(location).attr('href','/signin.html');
     }
 </script>

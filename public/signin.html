@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>로그인</h1><br>
-Email: <input type="text" id="name" name="username">
+Username: <input type="text" id="name" name="username">
 <br>
 Password: <input type="password" id="pwd" name="password">
 <br>
@@ -26,11 +26,11 @@ Password: <input type="password" id="pwd" name="password">
         var password = $("#pwd").val();
         $.ajax({
             method: "GET",
-            // 쿠키 로그인 방식
-            url: "/cookies/index",
+            // // 쿠키 로그인 방식
+            // url: "/cookies/index",
             
             // 세션 로그인 방식
-            // url: "/sessions/index",
+            url: "/sessions/index",
             
             // 토큰 로그인 방식
             // url: "/tokens/index",
@@ -42,10 +42,10 @@ Password: <input type="password" id="pwd" name="password">
             if(msg.message == "success"){
                 
                 //쿠키 로그인 방식
-                $(location).attr('href','/mypage_cookie.html');
+                // $(location).attr('href','/mypage_cookie.html');
                 
                 //세션 로그인 방식
-                // $(location).attr('href','/mypage.html');
+                $(location).attr('href','/mypage_session.html');
                 
                 //토큰 로그인 방식
                 // $(location).attr('href','/mypage.html');
